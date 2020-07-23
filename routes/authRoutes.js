@@ -8,7 +8,7 @@ module.exports = (app) => {
 		passport.authenticate('facebook'),
 		(req, res) => {
 			if (req.user || req.session.user) {
-				return res.redirect('/dashboard');
+				res.status(301).redirect('/dashboard')
 			}
 		}
 	);
