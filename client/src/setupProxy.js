@@ -5,7 +5,7 @@ module.exports = (app) => {
 		['/auth/facebook', '/api/*'],
 		createProxyMiddleware({
 			target: 'http://localhost:5000',
-			changeOrigin: true,
+			// changeOrigin: true,
 		})
 	);
 };

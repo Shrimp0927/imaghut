@@ -1,20 +1,36 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import * as actions from '../actions/index';
 import Header from './Header';
-const Landing = () => <div>Landing</div>;
-const Dashboard = () => <div>Dashboard</div>
+import Landing from './Landing';
+import Feed from './posts/Feed';
+import NewPost from './posts/NewPost';
+import MyProfile from './posts/MyProfile';
 
 class App extends Component {
-  render() {
-    return (
-      <div>
-        <Header />
-        <Route path="/" exact component={Landing} />
-        <Route path="/dashboard" component={Dashboard} />
-      </div>
-    )
-  }
+	componentDidMount() {
+		this.props.fetchUsers();
+	}
+
+	render() {
+		return (
+			<div className="container">
+				<Header />
+				<Route path="/" exact component={Landing} />
+				<Route path="/feed" component={Feed} />
+				<Route path="/posts" exact component={MyProfile} />
+				<Route path="/posts/new" component={NewPost} />
+			</div>
+		);
+	}
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+	return {
+		fetchUsers: () => dispatch(actions.fetchUsers()),
+	};
+};
+
+export default connect(null, mapDispatchToProps)(App);

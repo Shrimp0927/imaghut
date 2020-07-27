@@ -21,14 +21,15 @@ passport.use(
 			clientID: keys.clientID,
 			clientSecret: keys.clientSecret,
 			callbackURL: '/auth/facebook/callback',
+			profileFields: ['id', 'displayName'],
 		},
 		async (accessToken, refreshToken, profile, done) => {
-			const existingUser = await User.findOne({ facebookId: profile.id });
+			const existingUser = await User.findOne({ facebookId: profile.id, fullName: profile.displayName });
 
 			if (existingUser) {
 				done(null, existingUser);
 			} else {
-				const user = await new User({ facebookId: profile.id }).save();
+				const user = await new User({ facebookId: profile.id, fullName: profile.displayName }).save();
 
 				done(null, user);
 			}

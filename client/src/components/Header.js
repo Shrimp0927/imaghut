@@ -1,28 +1,60 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class Header extends Component {
-	render() {
-		const logoURL =
-			'https://vignette.wikia.nocookie.net/minecraft/images/e/ea/Painting.png/revision/latest?cb=20190911215718';
+	newPostRedirect = () => {
+		this.props.history.push('/posts/new');
+	}
 
+	renderContent = () => {
+		if (this.props.userLogin) {
+			return (
+				<Fragment>
+					<li>
+						<button
+							className="btn"
+							onClick={this.newPostRedirect}
+						>
+							New Post
+						</button>
+					</li>
+					<li>
+						<NavLink to="/posts">{this.props.userFullName}</NavLink>
+					</li>
+					<li>
+						<a href="/api/logout">Logout</a>
+					</li>
+				</Fragment>
+			);
+		}
 		return (
-			<div>
-				<nav>
-					<div className="nav-wrapper">
-						<a href="/" className="brand-logo">
-							Imaghut
-                            <img src={logoURL} height="50px" />
-						</a>
-						<ul className="right hide-on-med-and-down">
-							<li>
-								<a href="/auth/facebook">Login with Facebook</a>
-							</li>
-						</ul>
-					</div>
-				</nav>
-			</div>
+			<li>
+				<a href="/auth/facebook">Login with Facebook</a>
+			</li>
+		);
+	};
+
+	render() {
+		return (
+			<nav>
+				<div className="nav-wrapper">
+					<NavLink to={this.props.userLogin ? '/feed' : '/'} className="brand-logo">
+						Imaghut
+					</NavLink>
+					<ul className="right hide-on-med-and-down">{this.renderContent()}</ul>
+				</div>
+			</nav>
 		);
 	}
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+	return {
+		userLogin: state.auth.userLogin,
+		userFullName: state.auth.userFullName,
+	};
+};
+
+export default connect(mapStateToProps)(withRouter(Header));

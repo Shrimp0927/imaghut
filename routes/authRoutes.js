@@ -7,9 +7,7 @@ module.exports = (app) => {
 		'/auth/facebook/callback',
 		passport.authenticate('facebook'),
 		(req, res) => {
-			if (req.user || req.session.user) {
-				res.status(301).redirect('/dashboard')
-			}
+			res.redirect('/feed')
 		}
 	);
 

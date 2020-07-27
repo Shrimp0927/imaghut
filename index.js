@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const keys = require('./config/dev');
 require('./models/User');
+require('./models/Post');
 require('./services/passport');
 
 mongoose.connect(
@@ -29,6 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
+require('./routes/postsRoutes')(app);
 
 const PORT = process.env.PORT || 5000;
 

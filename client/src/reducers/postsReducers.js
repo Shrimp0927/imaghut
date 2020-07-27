@@ -1,17 +1,15 @@
 import * as types from '../actions/types';
 
 const initialState = {
-	userLogin: null,
-	userFullName: null,
+	userPosts: null,
 };
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case types.FETCH_USERS:
+		case types.FETCH_SURVEYS:
 			return {
 				...state,
-				userLogin: action.payload.data._id || false,
-				userFullName: action.payload.data.fullName || false,
+				userPosts: action.payload.data || false,
 			};
 		default:
 			return state;
