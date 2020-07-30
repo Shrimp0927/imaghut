@@ -3,18 +3,15 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
-const keys = require('./config/dev');
+const keys = require('./config/keys');
 require('./models/User');
 require('./models/Post');
 require('./services/passport');
 
-mongoose.connect(
-	'mongodb+srv://admin:Password@testing.qdfaf.mongodb.net/db?retryWrites=true&w=majority',
-	{
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	}
-);
+mongoose.connect(keys.mongoURI, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
 
 const app = express();
 
@@ -32,6 +29,15 @@ app.use(passport.session());
 require('./routes/authRoutes')(app);
 require('./routes/postsRoutes')(app);
 require('./routes/usersRoutes')(app);
+
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('client/build'));
+
+	const path = require('path');
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+	});
+}
 
 const PORT = process.env.PORT || 5000;
 

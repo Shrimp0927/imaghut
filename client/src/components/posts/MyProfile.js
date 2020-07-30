@@ -17,7 +17,7 @@ class MyPosts extends Component {
 	renderPosts = () => {
 		console.log(this.props.userPosts);
 		if (this.props.userPosts) {
-			return this.props.userPosts.reverse().map((post) => {
+			return this.props.userPosts.map((post) => {
 				return (
 					<div key={post._id} className="card darken-3">
 						<div className="card-content">

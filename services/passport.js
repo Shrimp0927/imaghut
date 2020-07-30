@@ -1,7 +1,7 @@
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const mongoose = require('mongoose');
-const keys = require('../config/dev');
+const keys = require('../config/keys');
 
 const User = mongoose.model('users');
 
@@ -24,12 +24,18 @@ passport.use(
 			profileFields: ['id', 'displayName'],
 		},
 		async (accessToken, refreshToken, profile, done) => {
-			const existingUser = await User.findOne({ facebookId: profile.id, fullName: profile.displayName });
+			const existingUser = await User.findOne({
+				facebookId: profile.id,
+				fullName: profile.displayName,
+			});
 
 			if (existingUser) {
 				done(null, existingUser);
 			} else {
-				const user = await new User({ facebookId: profile.id, fullName: profile.displayName }).save();
+				const user = await new User({
+					facebookId: profile.id,
+					fullName: profile.displayName,
+				}).save();
 
 				done(null, user);
 			}
