@@ -6,7 +6,12 @@ export const fetchUsers = () => async (dispatch) => {
 	dispatch({ type: types.FETCH_USERS, payload: res });
 };
 
+export const fetchUserPosts = () => async (dispatch) => {
+	const res = await axios.get('/api/posts/user');
+	dispatch({ type: types.FETCH_USER_POSTS, payload: res });
+};
+
 export const fetchPosts = () => async (dispatch) => {
 	const res = await axios.get('/api/posts');
-	dispatch({ type: types.FETCH_SURVEYS, payload: res });
+	dispatch({ type: types.FETCH_POSTS, payload: res });
 };

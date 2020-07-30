@@ -11,6 +11,7 @@ module.exports = (app) => {
 			body: body,
 			images: images,
 			_user: req.user.id,
+			_userFullName: req.user.fullName,
 			datePosted: Date.now(),
 		});
 
@@ -21,19 +22,32 @@ module.exports = (app) => {
 	app.post('/api/posts/like', requireLogin, async (req, res) => {
 		const filter = {
 			_id: req.body.surveyId,
-			usersLike: { $ne: req.user.id },
+			'usersLike.user': { $nin: [req.user] },
 		};
 		const update = {
-			$push: { usersLike: { user: req.user.id } },
+			$push: { usersLike: { user: req.user } },
 			$inc: { likes: 1 },
 		};
 
-		await Post.findOneAndUpdate(filter, update, { new: true });
+		await Post.findOneAndUpdate(filter, update, {
+			new: true,
+			useFindAndModify: false,
+		});
 		res.redirect('/posts');
 	});
 
 	app.get('/api/posts', requireLogin, async (req, res) => {
-		const posts = await Post.find({ _user: req.user.id });
+		let posts = [];
+
+		for (let i = 0; i < req.user.following.length; i++) {
+			posts.push(await Post.find({ _user: req.user.following[i].user }));
+		}
+
+		res.send(posts);
+	});
+
+	app.get('/api/posts/user', requireLogin, async (req, res) => {
+		const posts = await Post.find({ _user: req.user._id });
 
 		res.send(posts);
 	});

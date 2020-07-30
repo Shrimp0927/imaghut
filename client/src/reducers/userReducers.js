@@ -1,7 +1,9 @@
 import * as types from '../actions/types';
 
 const initialState = {
-	userLogin: null,
+	userFullName: null,
+	userFollowers: null,
+	userFollowing: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -9,7 +11,9 @@ const reducer = (state = initialState, action) => {
 		case types.FETCH_USERS:
 			return {
 				...state,
-				userLogin: action.payload.data._id || false,
+				userFullName: action.payload.data.fullName || false,
+				userFollowers: action.payload.data.followers || false,
+				userFollowing: action.payload.data.following || false,
 			};
 		default:
 			return state;

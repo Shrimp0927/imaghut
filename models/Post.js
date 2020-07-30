@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
 	_user: { type: Schema.Types.ObjectId, ref: 'User' },
+	_userFullName: String,
 	datePosted: Date,
 	body: String,
 	images: {
