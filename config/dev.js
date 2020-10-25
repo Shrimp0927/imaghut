@@ -1,6 +1,6 @@
 module.exports = {
-	clientID: '3131927840257132',
-	clientSecret: '1d6726b07bc1589c7dc9fd9b39f3cc5e',
+	clientID: '1203608477-ut8sjekbbcg5tp0oa0rdgp7h437jcgcr.apps.googleusercontent.com',
+	clientSecret: 'qFiES-4QLICEeC2TdOHQaxF6',
 	cookieKey: 'laksdjfalsdjflajsdf',
 	mongoURI:
 		'mongodb+srv://admin:Password@testing.qdfaf.mongodb.net/db?retryWrites=true&w=majority',

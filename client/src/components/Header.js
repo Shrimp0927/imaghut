@@ -31,7 +31,7 @@ class Header extends Component {
 		}
 		return (
 			<li>
-				<a href="/auth/facebook">Login with Facebook</a>
+				<a href="/auth/google">Login with Google</a>
 			</li>
 		);
 	};
