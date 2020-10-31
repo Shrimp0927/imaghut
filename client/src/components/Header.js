@@ -33,7 +33,7 @@ class Header extends Component {
 			<li>
 				<a href="/auth/google">Login with Google</a>
 			</li>
-		);
+		)
 	};
 
 	render() {
