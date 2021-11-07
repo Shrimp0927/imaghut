@@ -17,7 +17,6 @@ class App extends Component {
 	render() {
 		return (
 			<div className="container">
-				<iframe src="./googlebf39018b9f51ed8e.html" title="ok"></iframe>
 				<Header />
 				<Route path="/" exact component={Landing} />
 				<Route path="/feed" component={Feed} />

@@ -14,6 +14,7 @@ class Header extends Component {
 		if (this.props.userLogin) {
 			return (
 				<Fragment>
+					<meta name="google-site-verification" content="Wy7_YXy5JetmLD0VRYHLTyT8OhT5gTG--TzSV--8m30" />
 					<SearchBar />
 					<li>
 						<button className="btn" onClick={this.newPostRedirect}>
